@@ -1,0 +1,395 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SamuraiWriter7/origin-license-policy-registry/schemas/trace-royalty-preservation-rules.schema.json",
+  "title": "Trace and Royalty Preservation Rules",
+  "description": "Rules for preserving trace metadata, origin references, and royalty pointers across usage, redistribution, derivation, and agent consumption.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trace_royalty_preservation_rules"
+  ],
+  "properties": {
+    "trace_royalty_preservation_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "rule_status",
+        "asset_reference",
+        "policy_references",
+        "preservation_scope",
+        "trace_preservation",
+        "royalty_preservation",
+        "origin_reference_preservation",
+        "redistribution_rules",
+        "agent_rules",
+        "human_review"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this preservation rule set."
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of this preservation rule set."
+        },
+        "rule_status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "candidate",
+            "active",
+            "deprecated",
+            "revoked"
+          ]
+        },
+        "asset_reference": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "asset_id",
+            "asset_type"
+          ],
+          "properties": {
+            "asset_id": {
+              "type": "string"
+            },
+            "asset_type": {
+              "type": "string",
+              "enum": [
+                "origin_asset",
+                "derivative_asset",
+                "marketplace_listing",
+                "agent_manifest",
+                "other"
+              ]
+            },
+            "registry_reference": {
+              "type": "string"
+            },
+            "listing_id": {
+              "type": "string"
+            }
+          }
+        },
+        "policy_references": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "license_template_id",
+            "usage_policy_id",
+            "asset_policy_binding_id"
+          ],
+          "properties": {
+            "license_template_id": {
+              "type": "string"
+            },
+            "usage_policy_id": {
+              "type": "string"
+            },
+            "asset_policy_binding_id": {
+              "type": "string"
+            },
+            "repository_reference": {
+              "type": "string"
+            }
+          }
+        },
+        "preservation_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "applies_to",
+            "propagation_required"
+          ],
+          "properties": {
+            "applies_to": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "asset_metadata",
+                  "marketplace_listing",
+                  "derivative_creation",
+                  "commercial_distribution",
+                  "redistribution",
+                  "ai_inference_use",
+                  "ai_training_use",
+                  "agent_consumption",
+                  "exported_dataset",
+                  "generated_output"
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "propagation_required": {
+              "type": "boolean",
+              "description": "Whether preservation metadata must be propagated to downstream records."
+            },
+            "scope_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "trace_preservation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required",
+            "required_metadata",
+            "prohibited_actions"
+          ],
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "required_metadata": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "origin_asset_id",
+                  "source_asset_id",
+                  "trace_receipt_id",
+                  "origin_audit_record_id",
+                  "asset_policy_binding_id",
+                  "usage_policy_id",
+                  "license_template_id",
+                  "transformation_record_id"
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "prohibited_actions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "remove_trace_metadata",
+                  "rewrite_origin_reference",
+                  "hide_source_asset",
+                  "detach_audit_record",
+                  "strip_policy_binding",
+                  "obfuscate_transformation_path"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "minimum_trace_level": {
+              "type": "string",
+              "enum": [
+                "asset_id_only",
+                "asset_and_policy",
+                "full_trace_receipt",
+                "full_trace_and_audit"
+              ]
+            }
+          }
+        },
+        "royalty_preservation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required",
+            "royalty_pointer_required",
+            "required_metadata",
+            "prohibited_actions"
+          ],
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "royalty_pointer_required": {
+              "type": "boolean"
+            },
+            "required_metadata": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "royalty_allocation_id",
+                  "royalty_pointer",
+                  "origin_creator_id",
+                  "allocation_basis",
+                  "beneficiary_reference",
+                  "payment_review_status"
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "prohibited_actions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "remove_royalty_pointer",
+                  "bypass_royalty_allocation",
+                  "modify_allocation_without_review",
+                  "hide_beneficiary_reference",
+                  "execute_payment_without_human_review"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "royalty_resolution_mode": {
+              "type": "string",
+              "enum": [
+                "linked_allocation_graph",
+                "negotiated_agreement",
+                "platform_policy",
+                "human_review_required"
+              ]
+            }
+          }
+        },
+        "origin_reference_preservation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required",
+            "required_fields"
+          ],
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "required_fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "origin_asset_id",
+                  "origin_creator",
+                  "origin_repository",
+                  "origin_license_template_id",
+                  "origin_usage_policy_id",
+                  "origin_trace_receipt_id",
+                  "origin_audit_record_id"
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "attribution_notice_required": {
+              "type": "boolean"
+            }
+          }
+        },
+        "redistribution_rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "redistribution_allowed",
+            "conditions"
+          ],
+          "properties": {
+            "redistribution_allowed": {
+              "type": "boolean"
+            },
+            "conditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "preserve_trace_metadata",
+                  "preserve_origin_reference",
+                  "preserve_royalty_pointer",
+                  "preserve_license_terms",
+                  "preserve_asset_policy_binding",
+                  "include_attribution_notice",
+                  "human_review_required"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "redistribution_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "agent_rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowed_agent_actions",
+            "restricted_agent_actions"
+          ],
+          "properties": {
+            "allowed_agent_actions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "read_preservation_rules",
+                  "validate_trace_metadata",
+                  "validate_royalty_pointer",
+                  "evaluate_policy_binding",
+                  "propose_derivative_record",
+                  "propose_redistribution_record"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "restricted_agent_actions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "remove_trace_metadata",
+                  "remove_royalty_pointer",
+                  "rewrite_origin_reference",
+                  "execute_payment",
+                  "transfer_rights",
+                  "approve_policy_conflict",
+                  "override_human_review"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "agent_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "human_review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required_for"
+          ],
+          "properties": {
+            "required_for": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "execute_payment",
+                  "transfer_rights",
+                  "remove_trace_metadata",
+                  "remove_royalty_pointer",
+                  "modify_royalty_allocation",
+                  "resolve_policy_conflict",
+                  "approve_bulk_redistribution",
+                  "approve_bulk_ai_training",
+                  "none"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "review_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "rule_notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
