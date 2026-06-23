@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SamuraiWriter7/origin-license-policy-registry/schemas/asset-policy-binding.schema.json",
+  "title": "Asset Policy Binding",
+  "description": "Binding record that connects an origin-based structural asset to a usage policy and a license template.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "asset_policy_binding"
+  ],
+  "properties": {
+    "asset_policy_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "binding_status",
+        "target_asset",
+        "license_template_reference",
+        "usage_policy_reference",
+        "binding_scope",
+        "effective_permissions",
+        "inheritance",
+        "trace_and_royalty_links",
+        "human_review"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this asset-policy binding."
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of this binding record."
+        },
+        "binding_status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "candidate",
+            "active",
+            "deprecated",
+            "revoked"
+          ]
+        },
+        "target_asset": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "asset_id",
+            "asset_type"
+          ],
+          "properties": {
+            "asset_id": {
+              "type": "string"
+            },
+            "asset_type": {
+              "type": "string",
+              "enum": [
+                "origin_asset",
+                "derivative_asset",
+                "marketplace_listing",
+                "agent_manifest",
+                "other"
+              ]
+            },
+            "registry_reference": {
+              "type": "string"
+            },
+            "listing_id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
+          }
+        },
+        "license_template_reference": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "template_id",
+            "template_version",
+            "template_status"
+          ],
+          "properties": {
+            "template_id": {
+              "type": "string"
+            },
+            "template_version": {
+              "type": "string"
+            },
+            "template_status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "candidate",
+                "stable",
+                "deprecated"
+              ]
+            },
+            "repository_reference": {
+              "type": "string"
+            },
+            "applied_fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "commercial_use",
+                  "derivative_use",
+                  "ai_training",
+                  "ai_inference",
+                  "generated_outputs",
+                  "attribution",
+                  "royalty",
+                  "trace_preservation",
+                  "redistribution",
+                  "human_review"
+                ]
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "usage_policy_reference": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "policy_id",
+            "policy_version",
+            "policy_status"
+          ],
+          "properties": {
+            "policy_id": {
+              "type": "string"
+            },
+            "policy_version": {
+              "type": "string"
+            },
+            "policy_status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "candidate",
+                "active",
+                "deprecated",
+                "revoked"
+              ]
+            },
+            "repository_reference": {
+              "type": "string"
+            },
+            "overrides_template": {
+              "type": "boolean"
+            },
+            "override_summary": {
+              "type": "string"
+            }
+          }
+        },
+        "binding_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "applies_to",
+            "territory",
+            "duration"
+          ],
+          "properties": {
+            "applies_to": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "asset_metadata",
+                  "marketplace_listing",
+                  "derivative_creation",
+                  "ai_inference_use",
+                  "ai_training_use",
+                  "commercial_distribution",
+                  "redistribution",
+                  "agent_consumption"
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "territory": {
+              "type": "string",
+              "enum": [
+                "global",
+                "jurisdiction_specific",
+                "platform_specific",
+                "unspecified"
+              ]
+            },
+            "duration": {
+              "type": "string",
+              "enum": [
+                "perpetual",
+                "time_limited",
+                "until_revoked",
+                "unspecified"
+              ]
+            },
+            "starts_at": {
+              "type": "string"
+            },
+            "ends_at": {
+              "type": "string"
+            }
+          }
+        },
+        "effective_permissions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "commercial_use",
+            "derivative_use",
+            "ai_training",
+            "ai_inference"
+          ],
+          "properties": {
+            "commercial_use": {
+              "type": "string",
+              "enum": [
+                "allowed",
+                "prohibited",
+                "requires_permission",
+                "royalty_required"
+              ]
+            },
+            "derivative_use": {
+              "type": "string",
+              "enum": [
+                "allowed",
+                "prohibited",
+                "allowed_with_attribution",
+                "requires_permission",
+                "royalty_required"
+              ]
+            },
+            "ai_training": {
+              "type": "string",
+              "enum": [
+                "allowed",
+                "prohibited",
+                "requires_permission",
+                "restricted"
+              ]
+            },
+            "ai_inference": {
+              "type": "string",
+              "enum": [
+                "allowed",
+                "prohibited",
+                "requires_permission"
+              ]
+            }
+          }
+        },
+        "inheritance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "inherits_from_template",
+            "inherits_from_usage_policy",
+            "conflict_resolution"
+          ],
+          "properties": {
+            "inherits_from_template": {
+              "type": "boolean"
+            },
+            "inherits_from_usage_policy": {
+              "type": "boolean"
+            },
+            "conflict_resolution": {
+              "type": "string",
+              "enum": [
+                "usage_policy_overrides_template",
+                "template_overrides_usage_policy",
+                "most_restrictive_rule_wins",
+                "human_review_required"
+              ]
+            },
+            "conflict_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "trace_and_royalty_links": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "trace_preservation_required",
+            "royalty_pointer_required"
+          ],
+          "properties": {
+            "trace_preservation_required": {
+              "type": "boolean"
+            },
+            "royalty_pointer_required": {
+              "type": "boolean"
+            },
+            "trace_receipt_id": {
+              "type": "string"
+            },
+            "royalty_allocation_id": {
+              "type": "string"
+            },
+            "origin_audit_record_id": {
+              "type": "string"
+            },
+            "required_preservation_fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "origin_asset_id",
+                  "license_template_id",
+                  "usage_policy_id",
+                  "trace_receipt_id",
+                  "royalty_allocation_id",
+                  "origin_audit_record_id"
+                ]
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "human_review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required_for"
+          ],
+          "properties": {
+            "required_for": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "execute_payment",
+                  "transfer_rights",
+                  "remove_trace_metadata",
+                  "modify_royalty_allocation",
+                  "commercial_sublicense",
+                  "bulk_ai_training",
+                  "resolve_policy_conflict",
+                  "none"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "review_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "binding_notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
