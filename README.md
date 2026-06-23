@@ -4,9 +4,9 @@ AI-readable usage policy and license template registry for origin-based structur
 
 ## Overview
 
-Origin License Policy Registry defines machine-readable usage policies for origin-based structural assets.
+Origin License Policy Registry defines machine-readable usage policies and reusable license templates for origin-based structural assets.
 
-This repository separates usage permissions, license conditions, trace preservation, royalty preservation, and human review boundaries into structured records that can be read by both humans and AI agents.
+This repository separates usage permissions, license conditions, trace preservation, royalty preservation, redistribution boundaries, and human review gates into structured records that can be read by both humans and AI agents.
 
 It is designed as a policy layer connected to origin-based marketplaces, royalty systems, trace receipts, and future agent economy protocols.
 
@@ -20,11 +20,13 @@ This repository explores a complementary structure:
 human-readable license
         +
 AI-readable usage policy
+        +
+reusable license template
 ```
 
 The goal is not to replace legal agreements.
 
-The goal is to define structured policy records that can answer questions such as:
+The goal is to define structured policy records and reusable templates that can answer questions such as:
 
 * Can this asset be used commercially?
 * Can it be transformed into a derivative asset?
@@ -35,6 +37,7 @@ The goal is to define structured policy records that can answer questions such a
 * Is royalty preservation required?
 * What trace metadata must be preserved?
 * Which actions require human review?
+* Which license pattern should be applied to this asset?
 
 ## Core Concept
 
@@ -52,27 +55,33 @@ They also need clear rules for:
 * redistribution
 * trace metadata preservation
 * human review gates
+* reusable license templates
 
 This repository defines those rules as structured records.
 
 ## Current Version
 
 ```text
-v0.1.0-candidate — Usage Policy Record
+v0.2.0-candidate — License Template Registry
 ```
 
-This candidate release introduces the first AI-readable usage policy schema.
+This candidate release introduces reusable AI-readable license templates.
 
-It defines how an origin-based structural asset may be used, transformed, redistributed, attributed, and reviewed.
+It extends the v0.1 Usage Policy Record by adding a template layer that can be applied across multiple origin assets, derivative assets, and marketplace listings.
 
 ## Repository Structure
 
 ```text
 schemas/
   usage-policy.schema.json
+  license-template.schema.json
 
 examples/
   usage-policy.example.yaml
+  license-template.example.yaml
+
+docs/
+  license-template-registry.md
 
 scripts/
   validate_examples.py
@@ -100,20 +109,55 @@ It includes:
 * trace preservation requirements
 * human review requirements
 
-## Usage Policy Example
+## v0.2 — License Template Registry
+
+The v0.2 License Template Registry defines reusable AI-readable license templates.
+
+A license template is a reusable policy pattern.
+
+A usage policy is a concrete policy instance attached to a specific asset.
+
+```text
+License Template
+        ↓
+Usage Policy
+        ↓
+Origin Asset / Derivative Asset / Marketplace Listing
+```
+
+The v0.2 template model includes:
+
+* template identifier
+* template version
+* template name
+* template type
+* template status
+* compatible asset types
+* default permissions
+* generated output rules
+* attribution rules
+* royalty rules
+* trace preservation rules
+* redistribution rules
+* human review rules
+* allowed policy overrides
+
+## License Template Example
 
 ```yaml
-usage_policy:
-  id: usage-policy-2026-0001
-  version: "0.1.0"
-  asset_reference:
-    asset_id: origin-2026-0001
-    asset_type: origin_asset
-    origin_reference: origin-structure-market/origin-2026-0001
-    royalty_pointer: royalty-allocation-graph-2026-0001
-    trace_pointer: trace-receipt-2026-0001
+license_template:
+  id: license-template-2026-0001
+  version: "0.2.0"
+  name: Attribution + Royalty Required / No AI Training
+  template_type: royalty_required
+  status: candidate
 
-  permissions:
+  compatible_asset_types:
+    - origin_asset
+    - derivative_asset
+    - marketplace_listing
+
+  default_permissions:
     commercial_use: royalty_required
     derivative_use: allowed_with_attribution
     ai_training: prohibited
@@ -124,13 +168,19 @@ usage_policy:
     attribution_required: true
     royalty_required: true
 
-  redistribution:
-    allowed: true
-    conditions:
-      - preserve_trace_metadata
-      - preserve_origin_reference
-      - preserve_royalty_pointer
-      - preserve_license_terms
+  attribution:
+    required: true
+    required_fields:
+      - origin_creator
+      - origin_asset_id
+      - license_template_id
+      - trace_receipt_id
+      - royalty_pointer
+
+  royalty:
+    required: true
+    allocation_pointer_required: true
+    default_royalty_basis: negotiated
 
   trace_preservation:
     required: true
@@ -139,6 +189,15 @@ usage_policy:
       - trace_receipt_id
       - royalty_allocation_id
       - license_policy_id
+      - license_template_id
+
+  redistribution:
+    allowed: true
+    conditions:
+      - preserve_trace_metadata
+      - preserve_origin_reference
+      - preserve_royalty_pointer
+      - preserve_license_terms
 
   human_review:
     required_for:
@@ -146,7 +205,14 @@ usage_policy:
       - transfer_rights
       - remove_trace_metadata
       - modify_royalty_allocation
+      - commercial_sublicense
       - bulk_ai_training
+
+  allowed_policy_overrides:
+    - attribution_notice
+    - royalty_basis
+    - redistribution_conditions
+    - human_review_required_for
 ```
 
 ## Human Review Boundary
@@ -254,8 +320,9 @@ Humans approve execution.
 ## Status
 
 ```text
-v0.1.0-candidate
+v0.2.0-candidate
 ```
 
-The initial Usage Policy Record has passed validation through GitHub Actions.
+The Usage Policy Record and License Template Registry have passed validation through GitHub Actions.
+
 
