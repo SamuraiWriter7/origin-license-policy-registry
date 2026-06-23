@@ -1,0 +1,353 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SamuraiWriter7/origin-license-policy-registry/schemas/agent-policy-validation.schema.json",
+  "title": "Agent-Readable Policy Validation",
+  "description": "Validation record for AI agents evaluating usage policies, license templates, asset-policy bindings, and trace/royalty preservation rules.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "agent_policy_validation"
+  ],
+  "properties": {
+    "agent_policy_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "validation_status",
+        "agent_context",
+        "requested_action",
+        "policy_inputs",
+        "validation_checks",
+        "decision",
+        "human_review",
+        "agent_output_boundary"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this agent policy validation record."
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of this validation record."
+        },
+        "validation_status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "candidate",
+            "valid",
+            "invalid",
+            "requires_human_review"
+          ]
+        },
+        "agent_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "agent_id",
+            "agent_role",
+            "agent_mode"
+          ],
+          "properties": {
+            "agent_id": {
+              "type": "string"
+            },
+            "agent_role": {
+              "type": "string",
+              "enum": [
+                "reader",
+                "validator",
+                "marketplace_agent",
+                "royalty_agent",
+                "audit_agent",
+                "derivative_proposal_agent",
+                "custom"
+              ]
+            },
+            "agent_mode": {
+              "type": "string",
+              "enum": [
+                "read_only",
+                "evaluate",
+                "validate",
+                "propose",
+                "execute"
+              ]
+            },
+            "agent_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "requested_action": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action_type",
+            "action_description"
+          ],
+          "properties": {
+            "action_type": {
+              "type": "string",
+              "enum": [
+                "read_policy",
+                "evaluate_license",
+                "validate_policy_binding",
+                "validate_trace_metadata",
+                "validate_royalty_pointer",
+                "propose_derivative",
+                "propose_redistribution",
+                "request_quote",
+                "execute_payment",
+                "transfer_rights",
+                "bulk_ai_training",
+                "remove_trace_metadata",
+                "remove_royalty_pointer",
+                "custom"
+              ]
+            },
+            "action_description": {
+              "type": "string"
+            },
+            "target_asset_id": {
+              "type": "string"
+            }
+          }
+        },
+        "policy_inputs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "usage_policy_id",
+            "license_template_id",
+            "asset_policy_binding_id",
+            "preservation_rules_id"
+          ],
+          "properties": {
+            "usage_policy_id": {
+              "type": "string"
+            },
+            "license_template_id": {
+              "type": "string"
+            },
+            "asset_policy_binding_id": {
+              "type": "string"
+            },
+            "preservation_rules_id": {
+              "type": "string"
+            },
+            "origin_asset_id": {
+              "type": "string"
+            },
+            "marketplace_listing_id": {
+              "type": "string"
+            }
+          }
+        },
+        "validation_checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "usage_policy_check",
+            "license_template_check",
+            "asset_binding_check",
+            "trace_preservation_check",
+            "royalty_preservation_check",
+            "human_review_boundary_check"
+          ],
+          "properties": {
+            "usage_policy_check": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "not_applicable",
+                "requires_human_review"
+              ]
+            },
+            "license_template_check": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "not_applicable",
+                "requires_human_review"
+              ]
+            },
+            "asset_binding_check": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "not_applicable",
+                "requires_human_review"
+              ]
+            },
+            "trace_preservation_check": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "not_applicable",
+                "requires_human_review"
+              ]
+            },
+            "royalty_preservation_check": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "not_applicable",
+                "requires_human_review"
+              ]
+            },
+            "human_review_boundary_check": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "not_applicable",
+                "requires_human_review"
+              ]
+            },
+            "check_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "decision": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "allowed_agent_response"
+          ],
+          "properties": {
+            "result": {
+              "type": "string",
+              "enum": [
+                "allowed",
+                "allowed_with_conditions",
+                "prohibited",
+                "human_review_required"
+              ]
+            },
+            "allowed_agent_response": {
+              "type": "string",
+              "enum": [
+                "read",
+                "evaluate",
+                "validate",
+                "propose",
+                "stop_and_request_human_review",
+                "deny_action"
+              ]
+            },
+            "conditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "preserve_trace_metadata",
+                  "preserve_origin_reference",
+                  "preserve_royalty_pointer",
+                  "include_attribution_notice",
+                  "do_not_execute_payment",
+                  "do_not_transfer_rights",
+                  "human_review_before_execution"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "decision_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "human_review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required",
+            "required_for"
+          ],
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "required_for": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "execute_payment",
+                  "transfer_rights",
+                  "remove_trace_metadata",
+                  "remove_royalty_pointer",
+                  "modify_royalty_allocation",
+                  "approve_bulk_redistribution",
+                  "approve_bulk_ai_training",
+                  "resolve_policy_conflict",
+                  "none"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "review_reason": {
+              "type": "string"
+            }
+          }
+        },
+        "agent_output_boundary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowed_outputs",
+            "prohibited_outputs"
+          ],
+          "properties": {
+            "allowed_outputs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "policy_summary",
+                  "validation_result",
+                  "risk_summary",
+                  "derivative_proposal",
+                  "redistribution_proposal",
+                  "human_review_request"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "prohibited_outputs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "payment_execution",
+                  "rights_transfer",
+                  "metadata_removal_instruction",
+                  "royalty_bypass_instruction",
+                  "human_review_override",
+                  "policy_conflict_auto_approval"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "output_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "validation_notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
