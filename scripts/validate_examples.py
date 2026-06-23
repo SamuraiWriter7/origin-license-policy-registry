@@ -24,6 +24,11 @@ VALIDATION_TARGETS = [
         "schema": ROOT / "schemas" / "asset-policy-binding.schema.json",
         "example": ROOT / "examples" / "asset-policy-binding.example.yaml",
     },
+    {
+        "name": "Trace and Royalty Preservation Rules",
+        "schema": ROOT / "schemas" / "trace-royalty-preservation-rules.schema.json",
+        "example": ROOT / "examples" / "trace-royalty-preservation-rules.example.yaml",
+    },
 ]
 
 
@@ -66,3 +71,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
