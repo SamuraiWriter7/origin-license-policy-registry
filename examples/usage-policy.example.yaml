@@ -1,0 +1,57 @@
+usage_policy:
+  id: usage-policy-2026-0001
+  version: "0.1.0"
+  asset_reference:
+    asset_id: origin-2026-0001
+    asset_type: origin_asset
+    origin_reference: origin-structure-market/origin-2026-0001
+    royalty_pointer: royalty-allocation-graph-2026-0001
+    trace_pointer: trace-receipt-2026-0001
+
+  permissions:
+    commercial_use: royalty_required
+    derivative_use: allowed_with_attribution
+    ai_training: prohibited
+    ai_inference: allowed
+
+  generated_outputs:
+    ownership: downstream_creator
+    attribution_required: true
+    royalty_required: true
+    notes: >
+      Generated outputs may be owned by the downstream creator,
+      but attribution and royalty preservation are required when the output
+      substantially depends on the referenced origin asset.
+
+  redistribution:
+    allowed: true
+    conditions:
+      - preserve_trace_metadata
+      - preserve_origin_reference
+      - preserve_royalty_pointer
+      - preserve_license_terms
+
+  trace_preservation:
+    required: true
+    required_metadata:
+      - origin_asset_id
+      - trace_receipt_id
+      - royalty_allocation_id
+      - license_policy_id
+
+  human_review:
+    required_for:
+      - execute_payment
+      - transfer_rights
+      - remove_trace_metadata
+      - modify_royalty_allocation
+      - bulk_ai_training
+    review_notes: >
+      AI agents may read, evaluate, and propose usage,
+      but payment execution, rights transfer, metadata removal,
+      and bulk AI training require human review.
+
+  policy_notes: >
+    This policy defines an AI-readable usage boundary for an origin-based
+    structural asset. It is designed to preserve origin reference,
+    trace metadata, and royalty pointers across derivative use.
