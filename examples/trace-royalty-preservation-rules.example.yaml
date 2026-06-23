@@ -1,0 +1,136 @@
+trace_royalty_preservation_rules:
+  id: trace-royalty-preservation-rules-2026-0001
+  version: "0.4.0"
+  rule_status: candidate
+
+  asset_reference:
+    asset_id: origin-2026-0001
+    asset_type: origin_asset
+    registry_reference: origin-structure-market/origin-2026-0001
+    listing_id: listing-2026-0001
+
+  policy_references:
+    license_template_id: license-template-2026-0001
+    usage_policy_id: usage-policy-2026-0001
+    asset_policy_binding_id: asset-policy-binding-2026-0001
+    repository_reference: origin-license-policy-registry
+
+  preservation_scope:
+    applies_to:
+      - asset_metadata
+      - marketplace_listing
+      - derivative_creation
+      - commercial_distribution
+      - redistribution
+      - ai_inference_use
+      - agent_consumption
+      - generated_output
+    propagation_required: true
+    scope_notes: >
+      Trace metadata, origin references, and royalty pointers must be preserved
+      when this asset is listed, transformed, redistributed, evaluated by AI
+      agents, or used to generate downstream outputs.
+
+  trace_preservation:
+    required: true
+    required_metadata:
+      - origin_asset_id
+      - trace_receipt_id
+      - origin_audit_record_id
+      - asset_policy_binding_id
+      - usage_policy_id
+      - license_template_id
+      - transformation_record_id
+    prohibited_actions:
+      - remove_trace_metadata
+      - rewrite_origin_reference
+      - hide_source_asset
+      - detach_audit_record
+      - strip_policy_binding
+      - obfuscate_transformation_path
+    minimum_trace_level: full_trace_and_audit
+
+  royalty_preservation:
+    required: true
+    royalty_pointer_required: true
+    required_metadata:
+      - royalty_allocation_id
+      - royalty_pointer
+      - origin_creator_id
+      - allocation_basis
+      - beneficiary_reference
+      - payment_review_status
+    prohibited_actions:
+      - remove_royalty_pointer
+      - bypass_royalty_allocation
+      - modify_allocation_without_review
+      - hide_beneficiary_reference
+      - execute_payment_without_human_review
+    royalty_resolution_mode: linked_allocation_graph
+
+  origin_reference_preservation:
+    required: true
+    required_fields:
+      - origin_asset_id
+      - origin_creator
+      - origin_repository
+      - origin_license_template_id
+      - origin_usage_policy_id
+      - origin_trace_receipt_id
+      - origin_audit_record_id
+    attribution_notice_required: true
+
+  redistribution_rules:
+    redistribution_allowed: true
+    conditions:
+      - preserve_trace_metadata
+      - preserve_origin_reference
+      - preserve_royalty_pointer
+      - preserve_license_terms
+      - preserve_asset_policy_binding
+      - include_attribution_notice
+    redistribution_notes: >
+      Redistribution is allowed only when origin reference, trace metadata,
+      license terms, asset-policy binding, and royalty pointers are preserved.
+
+  agent_rules:
+    allowed_agent_actions:
+      - read_preservation_rules
+      - validate_trace_metadata
+      - validate_royalty_pointer
+      - evaluate_policy_binding
+      - propose_derivative_record
+      - propose_redistribution_record
+    restricted_agent_actions:
+      - remove_trace_metadata
+      - remove_royalty_pointer
+      - rewrite_origin_reference
+      - execute_payment
+      - transfer_rights
+      - approve_policy_conflict
+      - override_human_review
+    agent_notes: >
+      AI agents may inspect, validate, and propose preservation-aware actions,
+      but they must not remove trace metadata, remove royalty pointers,
+      rewrite origin references, or execute rights/payment actions.
+
+  human_review:
+    required_for:
+      - execute_payment
+      - transfer_rights
+      - remove_trace_metadata
+      - remove_royalty_pointer
+      - modify_royalty_allocation
+      - resolve_policy_conflict
+      - approve_bulk_redistribution
+      - approve_bulk_ai_training
+    review_notes: >
+      Human review is required when preservation metadata, royalty allocation,
+      policy conflict resolution, rights transfer, payment execution, bulk
+      redistribution, or bulk AI training are involved.
+
+  rule_notes: >
+    This rule set defines how trace metadata, origin references, and royalty
+    pointers must survive across reuse, transformation, redistribution,
+    generated outputs, and AI agent consumption.
+
