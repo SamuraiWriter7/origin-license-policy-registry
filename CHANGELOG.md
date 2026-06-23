@@ -2,6 +2,192 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.4.0-candidate
+
+### Added
+
+* Added `schemas/trace-royalty-preservation-rules.schema.json`
+* Added `examples/trace-royalty-preservation-rules.example.yaml`
+* Added `docs/trace-and-royalty-preservation-rules.md`
+* Updated `scripts/validate_examples.py` to validate:
+
+  * Usage Policy
+  * License Template
+  * Asset Policy Binding
+  * Trace and Royalty Preservation Rules
+
+### Trace and Royalty Preservation Rules
+
+The v0.4 schema defines explicit preservation rules for trace metadata, origin references, royalty pointers, redistribution, AI agent actions, and human review boundaries.
+
+It introduces a preservation layer after Asset Policy Binding.
+
+```text
+Usage Policy
+        ↓
+License Template
+        ↓
+Asset Policy Binding
+        ↓
+Trace and Royalty Preservation Rules
+```
+
+### Preservation Fields
+
+The v0.4 schema defines structured fields for:
+
+* preservation rule identifier
+* preservation rule version
+* rule status
+* asset reference
+* policy references
+* preservation scope
+* trace preservation requirements
+* royalty preservation requirements
+* origin reference preservation requirements
+* redistribution rules
+* AI agent rules
+* human review requirements
+* rule notes
+
+### Trace Preservation
+
+The preservation rule set defines which trace metadata must survive downstream use.
+
+Examples include:
+
+* origin asset ID
+* source asset ID
+* trace receipt ID
+* origin audit record ID
+* asset-policy binding ID
+* usage policy ID
+* license template ID
+* transformation record ID
+
+It may also prohibit actions such as:
+
+* removing trace metadata
+* rewriting origin references
+* hiding source assets
+* detaching audit records
+* stripping policy bindings
+* obfuscating transformation paths
+
+### Royalty Preservation
+
+The preservation rule set defines which royalty-related metadata must survive downstream use.
+
+Examples include:
+
+* royalty allocation ID
+* royalty pointer
+* origin creator ID
+* allocation basis
+* beneficiary reference
+* payment review status
+
+It may also prohibit actions such as:
+
+* removing royalty pointers
+* bypassing royalty allocation
+* modifying allocation without review
+* hiding beneficiary references
+* executing payment without human review
+
+### Origin Reference Preservation
+
+The preservation rule set defines which origin references must remain attached.
+
+Examples include:
+
+* origin asset ID
+* origin creator
+* origin repository
+* origin license template ID
+* origin usage policy ID
+* origin trace receipt ID
+* origin audit record ID
+
+### Agent Rules
+
+The v0.4 model defines allowed and restricted AI agent actions.
+
+AI agents may:
+
+* read preservation rules
+* validate trace metadata
+* validate royalty pointers
+* evaluate policy bindings
+* propose derivative records
+* propose redistribution records
+
+AI agents must not:
+
+* remove trace metadata
+* remove royalty pointers
+* rewrite origin references
+* execute payment
+* transfer rights
+* approve policy conflicts
+* override human review
+
+### Human Review Boundary
+
+The v0.4 model preserves and strengthens the controlled-readability boundary introduced in earlier versions:
+
+```text
+read      : allowed
+evaluate  : allowed
+validate  : allowed
+propose   : allowed
+execute   : human_review_required
+```
+
+Sensitive actions remain subject to human review, including:
+
+* payment execution
+* rights transfer
+* trace metadata removal
+* royalty pointer removal
+* royalty allocation modification
+* policy conflict resolution
+* bulk redistribution
+* bulk AI training
+
+### Validation
+
+* Confirmed that `examples/trace-royalty-preservation-rules.example.yaml` passes validation
+* Confirmed that the updated validation script validates v0.1, v0.2, v0.3, and v0.4 examples
+* Confirmed that GitHub Actions passes
+
+### Purpose
+
+This release upgrades the repository from an asset-policy binding layer into a preservation-aware policy registry.
+
+It answers the key question:
+
+```text
+What must not disappear when this asset is reused?
+```
+
+### Design Notes
+
+Trace and royalty metadata are treated as structural continuity, not optional decoration.
+
+```text
+Origin must remain visible.
+Trace must remain attached.
+Royalty must remain reachable.
+Human review must guard execution.
+```
+
+### Candidate Status
+
+This release is marked as a candidate because the initial Trace and Royalty Preservation Rules schema and example have passed validation, while agent-readable policy validation is reserved for the next version.
+
+---
+
 ## v0.3.0-candidate
 
 ### Added
