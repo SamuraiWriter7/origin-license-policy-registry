@@ -45,6 +45,135 @@ The goal is to define structured policy records, reusable templates, binding rec
 * Which policy actually applies to this asset or listing?
 * Which origin, trace, and royalty fields must survive downstream use?
 
+## Civilization OS / Legal OS Layer
+
+Origin License Policy Registry is not only a license template repository.
+
+It acts as a legal and policy layer for origin-based structural assets in a broader Civilization OS architecture.
+
+This repository defines how structural assets may be used, preserved, evaluated, and proposed against by AI agents while keeping execution-level actions under human review.
+
+## Why This Layer Matters
+
+AI-era assets are not only files, texts, models, prompts, schemas, or workflows.
+
+They may contain:
+
+* origin structures
+* derivative structures
+* trace metadata
+* license conditions
+* royalty pointers
+* policy boundaries
+* agent-readable constraints
+* human review requirements
+
+Without a structured policy layer, these elements can be separated, stripped, misread, or bypassed.
+
+Origin License Policy Registry provides a structured layer to keep them connected.
+
+## Civilization OS Position
+
+Within a broader Civilization OS architecture, this repository functions as the legal and institutional layer.
+
+```text
+Origin
+  = where the structure came from
+
+License
+  = how the structure may be used
+
+Policy
+  = what boundaries must be respected
+
+Registry
+  = where the policy can be referenced
+
+Trace
+  = how the origin remains auditable
+
+Royalty
+  = how value circulation remains reachable
+
+Human Review
+  = where execution-level decisions return to humans
+
+Agent Validation
+  = how AI agents read, evaluate, validate, and propose without overstepping
+```
+
+## Relationship to Other Layers
+
+```text
+origin-structure-market
+  = where structural assets are listed
+
+origin-license-policy-registry
+  = how structural assets may be used, preserved, and evaluated
+
+trace-receipt / audit layers
+  = how origin and transformation history remain visible
+
+royalty layers
+  = how value circulation and allocation remain reachable
+
+agent bridge layers
+  = how AI agents interact with the market under policy constraints
+```
+
+## Legal OS Perspective
+
+This repository can be understood as a Legal OS for origin-based structural assets.
+
+It does not replace human legal agreements.
+
+Instead, it provides machine-readable policy records that help humans, systems, marketplaces, and AI agents understand:
+
+* what is allowed
+* what is prohibited
+* what requires attribution
+* what requires royalty preservation
+* what metadata must survive
+* what actions require human review
+* what an AI agent may read, validate, and propose
+* what an AI agent must not execute automatically
+
+## First Arc Completion
+
+With v0.5, the first arc of this repository defines a complete policy path:
+
+```text
+Usage Policy
+        ↓
+License Template
+        ↓
+Asset Policy Binding
+        ↓
+Trace and Royalty Preservation Rules
+        ↓
+Agent-Readable Policy Validation
+```
+
+This path turns license conditions into an AI-readable policy surface.
+
+It allows policy to be read, checked, preserved, and proposed against while keeping high-impact execution under human review.
+
+## Design Statement
+
+```text
+Origin must remain visible.
+Trace must remain attached.
+Royalty must remain reachable.
+Policy must remain readable.
+Agents may validate and propose.
+Humans approve execution.
+```
+
+Origin License Policy Registry is therefore a foundational policy layer for AI-era structural assets.
+
+It connects origin, permission, preservation, royalty, and agent boundaries into a single machine-readable structure.
+
+
 ## Core Concept
 
 Origin-based structural assets require more than ordinary marketplace metadata.
