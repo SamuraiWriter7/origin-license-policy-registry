@@ -19,6 +19,11 @@ VALIDATION_TARGETS = [
         "schema": ROOT / "schemas" / "license-template.schema.json",
         "example": ROOT / "examples" / "license-template.example.yaml",
     },
+    {
+        "name": "Asset Policy Binding",
+        "schema": ROOT / "schemas" / "asset-policy-binding.schema.json",
+        "example": ROOT / "examples" / "asset-policy-binding.example.yaml",
+    },
 ]
 
 
