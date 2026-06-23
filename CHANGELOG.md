@@ -2,6 +2,232 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.5.0-candidate
+
+### Added
+
+* Added `schemas/agent-policy-validation.schema.json`
+* Added `examples/agent-policy-validation.example.yaml`
+* Added `docs/agent-readable-policy-validation.md`
+* Updated `scripts/validate_examples.py` to validate:
+
+  * Usage Policy
+  * License Template
+  * Asset Policy Binding
+  * Trace and Royalty Preservation Rules
+  * Agent-Readable Policy Validation
+
+### Agent-Readable Policy Validation
+
+The v0.5 schema defines how AI agents may evaluate usage policies, license templates, asset-policy bindings, and trace/royalty preservation rules.
+
+It introduces an agent-facing validation and action-boundary layer.
+
+```text
+Usage Policy
+        ↓
+License Template
+        ↓
+Asset Policy Binding
+        ↓
+Trace and Royalty Preservation Rules
+        ↓
+Agent-Readable Policy Validation
+```
+
+### Validation Fields
+
+The v0.5 schema defines structured fields for:
+
+* validation record identifier
+* validation version
+* validation status
+* agent context
+* requested action
+* policy inputs
+* validation checks
+* decision result
+* human review requirements
+* agent output boundary
+* validation notes
+
+### Agent Context
+
+The validation record identifies the AI agent attempting to evaluate or act on a policy.
+
+Supported agent roles include:
+
+* reader
+* validator
+* marketplace agent
+* royalty agent
+* audit agent
+* derivative proposal agent
+* custom
+
+Supported agent modes include:
+
+* read only
+* evaluate
+* validate
+* propose
+* execute
+
+### Requested Actions
+
+The v0.5 model supports requested actions such as:
+
+* read policy
+* evaluate license
+* validate policy binding
+* validate trace metadata
+* validate royalty pointer
+* propose derivative
+* propose redistribution
+* request quote
+* execute payment
+* transfer rights
+* bulk AI training
+* remove trace metadata
+* remove royalty pointer
+
+### Validation Checks
+
+The validation record evaluates a requested action against:
+
+* usage policy
+* license template
+* asset-policy binding
+* trace preservation rules
+* royalty preservation rules
+* human review boundary
+
+Each check may return:
+
+```text
+pass
+fail
+not_applicable
+requires_human_review
+```
+
+### Decision Results
+
+The validation result may be:
+
+```text
+allowed
+allowed_with_conditions
+prohibited
+human_review_required
+```
+
+The allowed agent response may be:
+
+```text
+read
+evaluate
+validate
+propose
+stop_and_request_human_review
+deny_action
+```
+
+### Agent Output Boundary
+
+AI agents may output:
+
+* policy summaries
+* validation results
+* risk summaries
+* derivative proposals
+* redistribution proposals
+* human review requests
+
+AI agents must not output:
+
+* payment execution
+* rights transfer
+* metadata removal instructions
+* royalty bypass instructions
+* human review overrides
+* policy conflict auto-approvals
+
+### Human Review Boundary
+
+The v0.5 model preserves and strengthens the controlled-readability boundary introduced in earlier versions:
+
+```text
+read      : allowed
+evaluate  : allowed
+validate  : allowed
+propose   : allowed
+execute   : human_review_required
+```
+
+Sensitive actions remain subject to human review, including:
+
+* payment execution
+* rights transfer
+* trace metadata removal
+* royalty pointer removal
+* royalty allocation modification
+* policy conflict resolution
+* bulk redistribution
+* bulk AI training
+
+### Validation
+
+* Confirmed that `examples/agent-policy-validation.example.yaml` passes validation
+* Confirmed that the updated validation script validates v0.1, v0.2, v0.3, v0.4, and v0.5 examples
+* Confirmed that GitHub Actions passes
+
+### Purpose
+
+This release upgrades the repository from a preservation-aware policy registry into an agent-readable validation layer.
+
+It answers the key question:
+
+```text
+What may this AI agent do with this asset under the linked policy records?
+```
+
+### Design Notes
+
+The goal is not fully autonomous rights execution.
+
+The goal is controlled agent participation.
+
+```text
+AI can read.
+AI can evaluate.
+AI can validate.
+AI can propose.
+Humans approve execution.
+```
+
+### First Arc Completion
+
+With v0.5, the first arc of `origin-license-policy-registry` is complete.
+
+The repository now defines:
+
+```text
+v0.1 — Usage Policy Record
+v0.2 — License Template Registry
+v0.3 — Asset Policy Binding
+v0.4 — Trace and Royalty Preservation Rules
+v0.5 — Agent-Readable Policy Validation
+```
+
+This establishes a practical AI-readable license and policy layer for origin-based structural assets.
+
+### Candidate Status
+
+This release is marked as a candidate because the Agent-Readable Policy Validation schema and example have passed validation, while deeper MCP integration, transaction logs, and external enforcement layers are reserved for future repositories or later versions.
+
+---
+
 ## v0.4.0-candidate
 
 ### Added
