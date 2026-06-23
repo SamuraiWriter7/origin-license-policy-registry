@@ -29,6 +29,11 @@ VALIDATION_TARGETS = [
         "schema": ROOT / "schemas" / "trace-royalty-preservation-rules.schema.json",
         "example": ROOT / "examples" / "trace-royalty-preservation-rules.example.yaml",
     },
+    {
+        "name": "Agent-Readable Policy Validation",
+        "schema": ROOT / "schemas" / "agent-policy-validation.schema.json",
+        "example": ROOT / "examples" / "agent-policy-validation.example.yaml",
+    },
 ]
 
 
