@@ -1,0 +1,88 @@
+license_template:
+  id: license-template-2026-0001
+  version: "0.2.0"
+  name: Attribution + Royalty Required / No AI Training
+  template_type: royalty_required
+  status: candidate
+
+  compatible_asset_types:
+    - origin_asset
+    - derivative_asset
+    - marketplace_listing
+
+  default_permissions:
+    commercial_use: royalty_required
+    derivative_use: allowed_with_attribution
+    ai_training: prohibited
+    ai_inference: allowed
+
+  generated_outputs:
+    ownership: downstream_creator
+    attribution_required: true
+    royalty_required: true
+    notes: >
+      Generated outputs may be owned by the downstream creator,
+      but attribution and royalty preservation are required when the output
+      substantially depends on the referenced origin asset.
+
+  attribution:
+    required: true
+    required_fields:
+      - origin_creator
+      - origin_asset_id
+      - license_template_id
+      - trace_receipt_id
+      - royalty_pointer
+    notice_template: >
+      This work is derived from or substantially assisted by an origin-based
+      structural asset. Origin reference, trace metadata, and royalty pointer
+      must be preserved.
+
+  royalty:
+    required: true
+    allocation_pointer_required: true
+    default_royalty_basis: negotiated
+    notes: >
+      Royalty allocation should be resolved through a linked royalty allocation
+      graph or a separately negotiated agreement.
+
+  trace_preservation:
+    required: true
+    required_metadata:
+      - origin_asset_id
+      - trace_receipt_id
+      - royalty_allocation_id
+      - license_policy_id
+      - license_template_id
+
+  redistribution:
+    allowed: true
+    conditions:
+      - preserve_trace_metadata
+      - preserve_origin_reference
+      - preserve_royalty_pointer
+      - preserve_license_terms
+
+  human_review:
+    required_for:
+      - execute_payment
+      - transfer_rights
+      - remove_trace_metadata
+      - modify_royalty_allocation
+      - commercial_sublicense
+      - bulk_ai_training
+    review_notes: >
+      AI agents may read, evaluate, and propose usage based on this template,
+      but payment, sublicensing, rights transfer, royalty modification,
+      and bulk AI training require human review.
+
+  allowed_policy_overrides:
+    - attribution_notice
+    - royalty_basis
+    - redistribution_conditions
+    - human_review_required_for
+
+  template_notes: >
+    This template is intended for structural assets that allow derivative
+    and inference use while prohibiting AI training and requiring attribution,
+    trace preservation, and royalty linkage.
