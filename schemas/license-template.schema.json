@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SamuraiWriter7/origin-license-policy-registry/schemas/license-template.schema.json",
+  "title": "License Template",
+  "description": "Reusable AI-readable license template for origin-based structural assets.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "license_template"
+  ],
+  "properties": {
+    "license_template": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "name",
+        "template_type",
+        "status",
+        "compatible_asset_types",
+        "default_permissions",
+        "generated_outputs",
+        "attribution",
+        "royalty",
+        "trace_preservation",
+        "redistribution",
+        "human_review",
+        "allowed_policy_overrides"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this license template."
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of this license template."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the license template."
+        },
+        "template_type": {
+          "type": "string",
+          "enum": [
+            "open_attribution",
+            "royalty_required",
+            "no_ai_training",
+            "human_review_required",
+            "commercial_restricted",
+            "custom"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "candidate",
+            "stable",
+            "deprecated"
+          ]
+        },
+        "compatible_asset_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "origin_asset",
+              "derivative_asset",
+              "marketplace_listing",
+              "agent_manifest",
+              "license_policy",
+              "other"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "default_permissions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "commercial_use",
+            "derivative_use",
+            "ai_training",
+            "ai_inference"
+          ],
+          "properties": {
+            "commercial_use": {
+              "type": "string",
+              "enum": [
+                "allowed",
+                "prohibited",
+                "requires_permission",
+                "royalty_required"
+              ]
+            },
+            "derivative_use": {
+              "type": "string",
+              "enum": [
+                "allowed",
+                "prohibited",
+                "allowed_with_attribution",
+                "requires_permission",
+                "royalty_required"
+              ]
+            },
+            "ai_training": {
+              "type": "string",
+              "enum": [
+                "allowed",
+                "prohibited",
+                "requires_permission",
+                "restricted"
+              ]
+            },
+            "ai_inference": {
+              "type": "string",
+              "enum": [
+                "allowed",
+                "prohibited",
+                "requires_permission"
+              ]
+            }
+          }
+        },
+        "generated_outputs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ownership",
+            "attribution_required",
+            "royalty_required"
+          ],
+          "properties": {
+            "ownership": {
+              "type": "string",
+              "enum": [
+                "downstream_creator",
+                "origin_creator",
+                "shared",
+                "case_by_case"
+              ]
+            },
+            "attribution_required": {
+              "type": "boolean"
+            },
+            "royalty_required": {
+              "type": "boolean"
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "attribution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required",
+            "required_fields"
+          ],
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "required_fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "origin_creator",
+                  "origin_asset_id",
+                  "license_template_id",
+                  "trace_receipt_id",
+                  "royalty_pointer",
+                  "source_url",
+                  "custom_notice"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "notice_template": {
+              "type": "string"
+            }
+          }
+        },
+        "royalty": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required",
+            "allocation_pointer_required"
+          ],
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "allocation_pointer_required": {
+              "type": "boolean"
+            },
+            "default_royalty_basis": {
+              "type": "string",
+              "enum": [
+                "gross_revenue",
+                "net_revenue",
+                "usage_count",
+                "negotiated",
+                "none"
+              ]
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "trace_preservation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required",
+            "required_metadata"
+          ],
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "required_metadata": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "origin_asset_id",
+                  "source_asset_id",
+                  "trace_receipt_id",
+                  "royalty_allocation_id",
+                  "audit_record_id",
+                  "license_policy_id",
+                  "license_template_id"
+                ]
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "redistribution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowed",
+            "conditions"
+          ],
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "conditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "preserve_trace_metadata",
+                  "preserve_origin_reference",
+                  "preserve_royalty_pointer",
+                  "preserve_license_terms",
+                  "notify_origin_creator",
+                  "human_review_required"
+                ]
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "human_review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required_for"
+          ],
+          "properties": {
+            "required_for": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "execute_payment",
+                  "transfer_rights",
+                  "remove_trace_metadata",
+                  "modify_royalty_allocation",
+                  "commercial_sublicense",
+                  "bulk_ai_training",
+                  "none"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "review_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "allowed_policy_overrides": {
+          "type": "array",
+          "description": "Fields that may be overridden when this template is instantiated as a specific usage policy.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "commercial_use",
+              "derivative_use",
+              "ai_training",
+              "ai_inference",
+              "generated_output_ownership",
+              "attribution_notice",
+              "royalty_basis",
+              "redistribution_conditions",
+              "human_review_required_for",
+              "none"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "template_notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
