@@ -13,7 +13,12 @@ VALIDATION_TARGETS = [
         "name": "Usage Policy",
         "schema": ROOT / "schemas" / "usage-policy.schema.json",
         "example": ROOT / "examples" / "usage-policy.example.yaml",
-    }
+    },
+    {
+        "name": "License Template",
+        "schema": ROOT / "schemas" / "license-template.schema.json",
+        "example": ROOT / "examples" / "license-template.example.yaml",
+    },
 ]
 
 
