@@ -1,0 +1,102 @@
+asset_policy_binding:
+  id: asset-policy-binding-2026-0001
+  version: "0.3.0"
+  binding_status: candidate
+
+  target_asset:
+    asset_id: origin-2026-0001
+    asset_type: origin_asset
+    registry_reference: origin-structure-market/origin-2026-0001
+    listing_id: listing-2026-0001
+    description: >
+      Origin-based structural asset listed in the Origin Structure Market.
+
+  license_template_reference:
+    template_id: license-template-2026-0001
+    template_version: "0.2.0"
+    template_status: candidate
+    repository_reference: origin-license-policy-registry
+    applied_fields:
+      - commercial_use
+      - derivative_use
+      - ai_training
+      - ai_inference
+      - generated_outputs
+      - attribution
+      - royalty
+      - trace_preservation
+      - redistribution
+      - human_review
+
+  usage_policy_reference:
+    policy_id: usage-policy-2026-0001
+    policy_version: "0.1.0"
+    policy_status: active
+    repository_reference: origin-license-policy-registry
+    overrides_template: true
+    override_summary: >
+      The concrete usage policy inherits the default license template
+      but explicitly prohibits bulk AI training and requires human review
+      for payment execution, rights transfer, and royalty modification.
+
+  binding_scope:
+    applies_to:
+      - asset_metadata
+      - marketplace_listing
+      - derivative_creation
+      - ai_inference_use
+      - commercial_distribution
+      - redistribution
+      - agent_consumption
+    territory: global
+    duration: until_revoked
+    starts_at: "2026-06-23"
+
+  effective_permissions:
+    commercial_use: royalty_required
+    derivative_use: allowed_with_attribution
+    ai_training: prohibited
+    ai_inference: allowed
+
+  inheritance:
+    inherits_from_template: true
+    inherits_from_usage_policy: true
+    conflict_resolution: usage_policy_overrides_template
+    conflict_notes: >
+      When the usage policy and license template conflict, the concrete
+      usage policy attached to the asset takes precedence unless human
+      review is explicitly required.
+
+  trace_and_royalty_links:
+    trace_preservation_required: true
+    royalty_pointer_required: true
+    trace_receipt_id: trace-receipt-2026-0001
+    royalty_allocation_id: royalty-allocation-graph-2026-0001
+    origin_audit_record_id: origin-audit-record-2026-0001
+    required_preservation_fields:
+      - origin_asset_id
+      - license_template_id
+      - usage_policy_id
+      - trace_receipt_id
+      - royalty_allocation_id
+      - origin_audit_record_id
+
+  human_review:
+    required_for:
+      - execute_payment
+      - transfer_rights
+      - remove_trace_metadata
+      - modify_royalty_allocation
+      - commercial_sublicense
+      - bulk_ai_training
+      - resolve_policy_conflict
+    review_notes: >
+      AI agents may read, evaluate, and propose actions based on this binding,
+      but execution of payments, rights transfer, sublicensing, metadata removal,
+      and conflict resolution require human review.
+
+  binding_notes: >
+    This binding connects an origin asset, a reusable license template,
+    and a concrete usage policy. It defines the effective policy that should
+    be applied when the asset is listed, reused, transformed, redistributed,
+    or evaluated by AI agents.
