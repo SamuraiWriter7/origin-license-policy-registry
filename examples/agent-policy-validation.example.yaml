@@ -1,0 +1,98 @@
+agent_policy_validation:
+  id: agent-policy-validation-2026-0001
+  version: "0.5.0"
+  validation_status: candidate
+
+  agent_context:
+    agent_id: marketplace-agent-2026-0001
+    agent_role: marketplace_agent
+    agent_mode: validate
+    agent_notes: >
+      The agent is validating whether a proposed derivative use can proceed
+      under the linked usage policy, license template, asset-policy binding,
+      and trace/royalty preservation rules.
+
+  requested_action:
+    action_type: propose_derivative
+    action_description: >
+      Propose a derivative asset record based on an origin asset listed in
+      the marketplace while preserving origin reference, trace metadata,
+      license terms, and royalty pointers.
+    target_asset_id: origin-2026-0001
+
+  policy_inputs:
+    usage_policy_id: usage-policy-2026-0001
+    license_template_id: license-template-2026-0001
+    asset_policy_binding_id: asset-policy-binding-2026-0001
+    preservation_rules_id: trace-royalty-preservation-rules-2026-0001
+    origin_asset_id: origin-2026-0001
+    marketplace_listing_id: listing-2026-0001
+
+  validation_checks:
+    usage_policy_check: pass
+    license_template_check: pass
+    asset_binding_check: pass
+    trace_preservation_check: pass
+    royalty_preservation_check: pass
+    human_review_boundary_check: pass
+    check_notes: >
+      The requested action is a proposal, not execution. The agent may propose
+      a derivative record if it preserves trace metadata, origin reference,
+      license terms, and royalty pointers.
+
+  decision:
+    result: allowed_with_conditions
+    allowed_agent_response: propose
+    conditions:
+      - preserve_trace_metadata
+      - preserve_origin_reference
+      - preserve_royalty_pointer
+      - include_attribution_notice
+      - do_not_execute_payment
+      - do_not_transfer_rights
+      - human_review_before_execution
+    decision_notes: >
+      The agent may propose a derivative asset record, but may not execute
+      payment, transfer rights, remove metadata, or modify royalty allocation.
+
+  human_review:
+    required: true
+    required_for:
+      - execute_payment
+      - transfer_rights
+      - remove_trace_metadata
+      - remove_royalty_pointer
+      - modify_royalty_allocation
+      - approve_bulk_redistribution
+      - approve_bulk_ai_training
+      - resolve_policy_conflict
+    review_reason: >
+      Human review is required for execution-level actions and any action
+      that changes rights, payments, trace metadata, royalty allocation,
+      or policy conflict resolution.
+
+  agent_output_boundary:
+    allowed_outputs:
+      - policy_summary
+      - validation_result
+      - risk_summary
+      - derivative_proposal
+      - redistribution_proposal
+      - human_review_request
+    prohibited_outputs:
+      - payment_execution
+      - rights_transfer
+      - metadata_removal_instruction
+      - royalty_bypass_instruction
+      - human_review_override
+      - policy_conflict_auto_approval
+    output_notes: >
+      The agent may generate summaries, validation results, risk summaries,
+      and proposals. It must not generate execution instructions that bypass
+      human review or preservation requirements.
+
+  validation_notes: >
+    This validation record allows an AI agent to evaluate and propose usage
+    while preserving the controlled boundary between agent-readable policy
+    interpretation and human-approved execution.
+
